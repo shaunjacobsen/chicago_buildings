@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Chicago Building Age Map</title>
+  
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+  <script src='//api.tiles.mapbox.com/mapbox.js/v1.5.1/mapbox.js'></script>
+  <link href='//api.tiles.mapbox.com/mapbox.js/v1.5.1/mapbox.css' rel='stylesheet' />
+  <link href='css/style.css' rel='stylesheet' />
+  <link href='http://fonts.googleapis.com/css?family=Signika+Negative' rel='stylesheet' type='text/css'>
+
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $(".trigger").click(function(){
+            $("#legend").slideToggle("fast");
+            $(this).toggleClass("active");
+            return false;
+        });
+    });
+    </script>
+
+<meta name="description" content="This map displays the year of construction of buildings in Chicago.">
+
+
+</head>
+<body>
+
+<div id="container">
+
+<div id="navigation">
+    <span><strong>Chicago</strong> Building Age Map</span>
+</div>
+
+<div id="about">
+    <span>Hover over buildings to see address and year of construction. Not all buildings have construction or address information available; unavailable data displays as "0".</span>
+    <ul id='layer-ui'><a class="trigger" href="#">LEGEND</a></ul> 
+</div>
+
+<script src="js/csv2geojson.js"></script>
+
+<div id='map'>
+
+    <a href='#' id='geolocate'><img src="img/geolocate-01.png" height="20px" /></a>
+
+</div>
+<script>
+var map = L.mapbox.map('map', 'smartchicagocollaborative.fmie8kt9', {
+    zoomControl: false
+})
+    .setView([41.8928, -87.6491], 14),
+    markerLayer = L.mapbox.markerLayer().addTo(map);
+    map.gridControl.options.follow = true;
+    new L.Control.Zoom({ position: 'topright' }).addTo(map);
+
+    var gridLayer = L.mapbox.gridLayer('smartchicagocollaborative.fmie8kt9');
+    map.addLayer(gridLayer);
+    map.addControl(L.mapbox.gridControl(gridLayer, {follow: true}));
+
+    var gridLayer2 = L.mapbox.gridLayer('smartchicagocollaborative.v72b7qfr');
+    map.addLayer(gridLayer2);
+    map.addControl(L.mapbox.gridControl(gridLayer2, {follow: true}));
+
+    var gridLayer3 = L.mapbox.gridLayer('smartchicagocollaborative.fz60qkt9');
+    map.addLayer(gridLayer3);
+    map.addControl(L.mapbox.gridControl(gridLayer3, {follow: true}));
+
+    var gridLayer4 = L.mapbox.gridLayer('smartchicagocollaborative.indhd7vi');
+    map.addLayer(gridLayer4);
+    map.addControl(L.mapbox.gridControl(gridLayer4, {follow: true}));
+
+    var gridLayer5 = L.mapbox.gridLayer('smartchicagocollaborative.c5ak0529');
+    map.addLayer(gridLayer5);
+    map.addControl(L.mapbox.gridControl(gridLayer5, {follow: true}));
+
+
+var ui = document.getElementById('layer-ui');
+
+addLayer(L.mapbox.tileLayer('smartchicagocollaborative.v72b7qfr'), 'Thru 1899', 1);
+addLayer(L.mapbox.tileLayer('smartchicagocollaborative.fz60qkt9'), '1900-1949', 2);
+addLayer(L.mapbox.tileLayer('smartchicagocollaborative.indhd7vi'), '1950-1999', 3);
+addLayer(L.mapbox.tileLayer('smartchicagocollaborative.c5ak0529'), '2000-Now', 4);
+
+function addLayer(layer, name, zIndex) {
+    layer
+        .setZIndex(zIndex)
+        .addTo(map);
+
+// Layer toggler
+
+var item = document.createElement('li');
+    var link = document.createElement('a');
+
+    link.href = '#';
+    link.className = 'active';
+    link.innerHTML = name;
+
+    link.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (map.hasLayer(layer)) {
+            map.removeLayer(layer);
+            this.className = '';
+        } else {
+            map.addLayer(layer);
+            this.className = 'active';
+        }
+    };
+
+    item.appendChild(link);
+    ui.appendChild(item);
+}
+
+// Geolocation
+
+var geolocate = document.getElementById('geolocate');
+
+// This uses the HTML5 geolocation API, which is available on
+// most mobile browsers and modern browsers, but not in Internet Explorer
+//
+// See this chart of compatibility for details:
+// http://caniuse.com/#feat=geolocation
+if (!navigator.geolocation) {
+    geolocate.innerHTML = 'geolocation is not available';
+} else {
+    geolocate.onclick = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        map.locate();
+    };
+}
+
+// Once we've got a position, zoom and center the map
+// on it, and add a single marker.
+map.on('locationfound', function(e) {
+    map.fitBounds(e.bounds);
+
+    map.markerLayer.setGeoJSON({
+        type: "Feature",
+        geometry: {
+            type: "Point",
+            coordinates: [e.latlng.lng, e.latlng.lat]
+        },
+        properties: {
+            'marker-color': '#DB3156',
+            'marker-symbol': 'embassy'
+        }
+    });
+});
+
+// If the user chooses not to allow their location
+// to be shared, display an error message.
+map.on('locationerror', function() {
+    geolocate.innerHTML = '&#x274C;';
+});
+
+    var tooltip = this.callbacks._currentTooltip;
+if (tooltip){
+
+  // Default offset is bottom right
+  var offsetX = 20;
+  var offsetY = 20;
+
+  // Check if horizontal space
+  if ((pos.x + tooltip.offsetWidth + offsetX + 5) > this.map.size.w) {
+    offsetX = -tooltip.offsetWidth - 5;
+  }
+
+  // Check if vertical space
+  if ((pos.y + tooltip.offsetHeight + offsetY + 5) > this.map.size.h) {
+    offsetY = -35;
+  }
+
+  tooltip.style.left = pos.x + offsetX + 'px';
+  tooltip.style.top = pos.y + offsetY + 'px';
+}
+
+</script>
+
+<div id="legend">
+    Legend
+
+    <ul>
+        <li><span style="background:#cc4c02;"></span><p>Until 1874</p></li>
+        <li><span style="background:#ec7014;"></span><p>1875-99</p></li>
+        <li><span style="background:#fee391;"></span><p>1900-24</p></li>
+        <li><span style="background:#fff7bc;"></span><p>1925-49</p></li>
+        <li><span style="background:#ffffe5;"></span><p>1950-59</p></li>
+        <li><span style="background:#deebf7;"></span><p>1960-69</p></li>
+        <li><span style="background:#c6dbef;"></span><p>1970-79</p></li>
+        <li><span style="background:#9ecae1;"></span><p>1980-89</p></li>
+        <li><span style="background:#6baed6;"></span><p>1990-99</p></li>
+        <li><span style="background:#4292c6;"></span><p>2000-05</p></li>
+        <li><span style="background:#2171b5;"></span><p>2006-10</p></li>
+        <li><span style="background:#084594;"></span><p>2010-</p></li>
+    </ul>
+</div>
+
+<div id="footer"><p>Map created by Shaun Jacobsen of <a href="http://www.transitized.com/?utm_source=Building%20Map&utm_medium=footer&utm_campaign=App%20referral">Transitized</a>. Hosting provided by <a href="http://www.smartchicagocollaborative.org">Smart Chicago Collaborative</a>. Data provided by City of Chicago. Last updated 16 Dec 2013.</p></div>
+
+</div>
+
+<script src="js/script.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36646540-1', 'transitized.com');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,354 @@
+body {
+    margin:0;
+    padding:0;
+}
+
+#map {
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:100%;
+    background-color:#000;
+    margin-top: 0px;
+}
+
+#search {
+    position:absolute;
+    top:10px;
+    right:10px;
+    font-size:150%;
+}
+
+#map-ui {
+    position: absolute;
+    top: 75px;
+    left: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+}
+
+#map-ui a {
+    font: normal 13px/18px 'Helvetica Neue', Helvetica, sans-serif;
+    background: #FFF;
+    color: #3C4E5A;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #BBB;
+    border-bottom-width: 0;
+    min-width: 138px;
+    padding: 10px;
+    text-decoration: none;
+}
+
+#map-ui a:hover {
+    background: #ECF5FA;
+}
+
+#map-ui li:last-child a {
+    border-bottom-width: 1px;
+    -webkit-border-radius: 0 0 3px 3px;
+    border-radius: 0 0 3px 3px;
+}
+
+#map-ui li:first-child a {
+    -webkit-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+}
+
+#map-ui a.active {
+    background: #3887BE;
+    border-color: #3887BE;
+    border-top-color: #FFF;
+    color: #FFF;
+}
+
+#layer-ui {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    z-index: 2;
+}
+
+#layer-ui li {
+    display: inline-block;
+}
+
+#layer-ui a {
+    font-family: 'Signika Negative', sans-serif;
+    display: inline-block;
+    color: #999;
+    font-size: 16px;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: rgba(64,64,64,.8);
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100px;
+    text-align: center;
+    border-radius: 2px;
+    border: 1px solid;
+    border-color: rgba(0,0,0,0);
+}
+
+#layer-ui a:hover {
+    border: 1px solid;
+    border-color: rgba(177,241,253,0.9);
+}
+
+#layer-ui a.active {
+    border-color: rgba(177,241,253,1);
+    color: rgba(177,241,253,1);
+}
+
+#navigation {
+    min-height: 30px;
+    padding: 10px 50px 5px 10px;
+    position: relative;
+    background-color: rgba(0,0,0,0.75);
+    z-index:1000;
+}
+
+#navigation span {
+    font-family: 'Signika Negative', sans-serif;
+    color: #fff;
+    font-size: 24px;
+    font-variant: bold;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+#navigation span strong {
+    color: #B1F1FD;
+}
+
+#footer {
+    min-height: 15px;
+    width: auto;
+    position: absolute;
+    bottom: 0px;
+    background-color: rgba(0,0,0,0.75);
+    z-index:1000;
+    padding: 5px 10px 5px 10px;
+}
+
+#footer p {
+    font-family: 'Signika Negative', sans-serif;
+    color: #fff;
+    font-size: 11px;
+    font-variant: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline;
+
+}
+
+#footer p strong {
+    color: #B1F1FD;
+}
+
+#footer a {
+    color: #B1F1FD;
+    text-decoration: none;
+}
+
+#footer a:hover {
+    color: #B1F1FD;
+    text-decoration: underline;
+}
+
+#footer a:active {
+    color: yellow;
+    text-decoration: underline;
+}
+
+/* Legend */
+
+#legendBtn {
+    z-index: 9999991;
+    color: #fff;
+    position: absolute;
+    bottom: 45px;
+}
+
+#legend {
+    z-index: 999999;
+    position: relative;
+    top: 0px;
+    height: 40px;
+    background-color: rgba(0,0,0,.75);
+    font-family: 'Signika Negative', sans-serif;
+    font-size: 0px;
+    color: rgb(177,241,253);
+    text-transform: uppercase;
+    padding-left: 10px;
+    display: none;
+}
+
+#legend ul {
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+#legend li {
+    list-style-image: none;
+    color: #fff;
+    font-size: 11px;
+    display: inline;
+    margin-right: -60px;
+}
+
+#legend p {
+    display: inline;
+    float: bottom;
+    position:relative;
+    top: 15px;
+    left: -75px;
+}
+
+#legend span {
+    height: 15px;
+    width: 75px;
+    display: inline-block;
+}
+
+a.trigger {
+    position: relative;
+}
+
+/* Geolocation button */
+
+#geolocate {
+    background: #fff;
+    position: relative;
+    top: 75px;
+    left: -10px;
+    float: right;
+    width: 28px;
+    height: 28px;
+    z-index: 1000;
+    font: 10px;
+    text-align: center;
+    padding: 3px 0 0 0;
+    color: #3C4E5A;
+    display: block;
+    border: 1px solid #BBB;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#geolocate:hover {
+    background: #ECF5FA;
+}
+
+#about {
+    background: rgba(0,0,0,0.75);
+    z-index:1;
+    position: relative;
+    padding: 0px 50px 5px 10px;
+    font-family: 'Signika Negative', sans-serif;
+    font-size: 11px;
+    color: #999;
+}
+
+#about span:nth-child(2) {
+    color: #B1F1FD;
+}
+
+.my-legend {
+  max-width: 400px !important;
+  }
+
+.map-tooltip.closeable, .map-tooltip, .leaflet-popup-close-button {
+  background-image:none !important;
+  background-repeat:no-repeat;
+  }
+
+.map-tooltip.closeable, .map-tooltip {
+    border: 3px solid !important;
+    border-color: rgb(255,5,69) !important;
+    background-color: #444 !important;
+}
+
+/* Scale for smartphones */
+
+@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+
+#navigation {
+        min-height: 20px;
+        padding: 7px 15px 5px 10px;
+        background-color: rgba(177,241,253,1);
+    }
+
+#navigation span {
+        font-size: 14px;
+        color: #678b92;
+    }
+
+#navigation span strong {
+        font-size: 14px;
+        color: #476065;
+    }
+
+#about span {
+    display:none;
+    }
+
+#footer p {
+    font-size: 9px;
+    letter-spacing: 0px;
+    line-height: -10px;
+    display: inline-block;
+    }
+
+#layer-ui a {
+    font-size: 12px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 58px;
+    }
+
+#layer-ui a:hover {
+    background-color: rgba(177,241,253,1);
+    }
+
+#about .trigger {
+    font-size: 14px;
+    width: 253px;
+    margin-bottom: 3px;
+    margin-top: 8px;
+}
+
+#legend {
+    position: relative;
+    height: 215px;
+    background-color: rgba(0,0,0,.75);
+    font-family: 'Signika Negative', sans-serif;
+    font-size: 0px;
+    color: rgb(177,241,253);
+    text-transform: uppercase;
+    padding-left: 10px;
+    z-index: 1;
+}
+
+#legend li {
+    display: block;
+    margin-right: -60px;
+    margin-bottom: -2px;
+}
+
+#legend p {
+    top: -4px;
+    left: 5px;
+}
+
+#legend span {
+    width: 15px;
+}
+
+}    
